@@ -1,0 +1,38 @@
+.container {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+}
+
+.game-card {
+  flex: 1 1 calc(20% - 32px);
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.game-card h3 {
+  margin: 8px 0;
+  font-size: 1.2em;
+}
+
+.game-card p {
+  margin: 4px 0;
+  color: #555;
+}
