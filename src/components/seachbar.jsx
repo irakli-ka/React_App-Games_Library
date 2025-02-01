@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { DarkModeContext } from '../context/DarkModeContext';
 import styles from '../styles/Searchbar.module.css';
 import sunIcon from "../assets/sun.svg";
@@ -7,7 +7,23 @@ import searchIconLight from "../assets/search-light.svg";
 import searchIconDark from "../assets/search-dark.svg";
 
 const SearchBar = ({ search, setSearch }) => {
-  const { darkMode, toggleDarkMode, showEasterEgg } = useContext(DarkModeContext);
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
+
+  useEffect(() => {
+    if (showEasterEgg) {
+      const timer = setTimeout(() => {
+        setShowEasterEgg(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showEasterEgg]);
+
+  const handleGifClick = () => {
+    if (!darkMode) {
+      setShowEasterEgg(true);
+    }
+  };
 
   return (
     <div className={`${styles['search-bar-container']} ${darkMode ? styles['dark-mode'] : ''}`}>
@@ -28,6 +44,7 @@ const SearchBar = ({ search, setSearch }) => {
         src={darkMode ? "https://media.tenor.com/giNrzT0tQGsAAAAj/bonfire-dark-souls.gif" : "https://media.tenor.com/QTbcrC893SIAAAAi/solaire.gif"}
         alt="Bonfire"
         className={styles['gif']}
+        onClick={handleGifClick}
       />
       {showEasterEgg && (
         <div className={styles['easter-egg']}>
