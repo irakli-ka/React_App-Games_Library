@@ -12,6 +12,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  width: 100%;
+  overflow-x: hidden;
+
+
 }
 
 a {

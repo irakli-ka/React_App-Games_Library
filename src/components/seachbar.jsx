@@ -27,7 +27,7 @@ const SearchBar = ({ search, setSearch }) => {
       <img
         src={darkMode ? "https://media.tenor.com/giNrzT0tQGsAAAAj/bonfire-dark-souls.gif" : "https://media.tenor.com/QTbcrC893SIAAAAi/solaire.gif"}
         alt="Bonfire"
-        className={styles['bonfire-gif']}
+        className={styles['gif']}
       />
       {showEasterEgg && (
         <div className={styles['easter-egg']}>

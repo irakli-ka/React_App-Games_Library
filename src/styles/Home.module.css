@@ -4,16 +4,23 @@
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+}
 
-}
 .container {
-    margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    padding: 16px;
-    justify-content: center;
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  justify-content: center;
+  max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden
 }
+
+
+
 
 .game-card {
   min-width: 350px;
@@ -66,3 +73,4 @@
 .scrollToTop:hover {
   background-color: #555;
 }
+
