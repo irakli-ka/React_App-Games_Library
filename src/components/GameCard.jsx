@@ -15,7 +15,7 @@ const GameCard = ({ game }) => {
     palette: {
       mode: darkMode ? 'dark' : 'light',
       background: {
-        paper: darkMode ? '#424242' : '#fff',
+        paper: darkMode ? '#424242' : '#d1d1d1',
       },
       text: {
         primary: darkMode ? '#fff' : '#000',
