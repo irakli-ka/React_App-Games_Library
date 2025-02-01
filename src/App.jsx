@@ -5,20 +5,23 @@ import Home from './pages/Home';
 import Tracker from './pages/Tracker';
 import Settings from './pages/Settings';
 import ErrorPage from './pages/ErrorPage';
+import { DarkModeProvider } from './context/DarkModeContext';
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tracker" element={<Tracker />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <DarkModeProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tracker" element={<Tracker />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </DarkModeProvider>
   );
 }
 
