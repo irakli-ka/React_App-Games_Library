@@ -66,11 +66,7 @@ const Home = () => {
       setLoading(true);
       try {
         const response = await GameService.searchGames(debouncedSearch);
-        if (response && response.results) {
-          setGames(response.results);
-        } else {
-          console.error("Failed to search games: Invalid response format");
-        }
+        setGames(response.results);
       } catch (error) {
         console.error("Failed to search games:", error);
       } finally {
