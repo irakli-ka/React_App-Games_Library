@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Tracker from './pages/Tracker';
 import Settings from './pages/Settings';
 import ErrorPage from './pages/ErrorPage';
+import Game from './pages/Game';
 import { DarkModeProvider } from './context/DarkModeContext';
 import './App.css';
 
@@ -15,6 +16,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/game/:id" element={<Game />} />
           <Route path="/tracker" element={<Tracker />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<ErrorPage />} />

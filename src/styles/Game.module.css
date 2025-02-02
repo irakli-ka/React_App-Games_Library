@@ -1,0 +1,66 @@
+.body {
+  background-image: url('/background.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 30px;
+}
+
+.loader, .error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-details-card {
+  display: flex;
+  flex-direction: column; 
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 20px;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+.dark-mode .game-details-card {
+  background-color: #333;
+  color: #fff;
+}
+
+.game-image-container {
+  flex: 1;
+  max-width: 100%; 
+}
+
+.game-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.game-info {
+  flex: 2;
+  padding: 20px;
+}
+
+.game-info h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.game-info p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}

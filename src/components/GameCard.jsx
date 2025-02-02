@@ -7,6 +7,7 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { DarkModeContext } from '../context/DarkModeContext';
+import { Link } from 'react-router';
 
 const GameCard = ({ game }) => {
   const { darkMode } = useContext(DarkModeContext);
@@ -44,7 +45,9 @@ const GameCard = ({ game }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          <Button size="small" component={Link} to={`/game/${game.id}`}>
+              Details
+          </Button>        
         </CardActions>
       </Card>
     </ThemeProvider>

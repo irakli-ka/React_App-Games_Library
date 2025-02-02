@@ -4,11 +4,30 @@ const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
 
 class GameService {
+  static cache = {
+    games: JSON.parse(sessionStorage.getItem('gamesCache')) || {},
+    gameDetails: JSON.parse(sessionStorage.getItem('gameDetailsCache')) || {},
+    searchResults: JSON.parse(sessionStorage.getItem('searchResultsCache')) || {}
+  };
+
+  static saveCache() {
+    sessionStorage.setItem('gamesCache', JSON.stringify(this.cache.games));
+    sessionStorage.setItem('gameDetailsCache', JSON.stringify(this.cache.gameDetails));
+    sessionStorage.setItem('searchResultsCache', JSON.stringify(this.cache.searchResults));
+  }
+
   static async getGames(params) {
+    const cacheKey = `page_${params.page}_size_${params.page_size}`;
+    if (this.cache.games[cacheKey]) {
+      return this.cache.games[cacheKey];
+    }
+
     try {
       const response = await axios.get(BASE_URL, {
         params: { ...params, key: API_KEY }
       });
+      this.cache.games[cacheKey] = response.data;
+      this.saveCache();
       return response.data;
     } catch (error) {
       console.error("Error fetching games:", error);
@@ -17,10 +36,16 @@ class GameService {
   }
 
   static async getGameDetails(gameId) {
+    if (this.cache.gameDetails[gameId]) {
+      return this.cache.gameDetails[gameId];
+    }
+
     try {
       const response = await axios.get(`${BASE_URL}/${gameId}`, {
         params: { key: API_KEY },
       });
+      this.cache.gameDetails[gameId] = response.data;
+      this.saveCache();
       return response.data;
     } catch (error) {
       console.error(`Error fetching details for game ID ${gameId}:`, error);
@@ -29,10 +54,16 @@ class GameService {
   }
 
   static async searchGames(query) {
+    if (this.cache.searchResults[query]) {
+      return this.cache.searchResults[query];
+    }
+
     try {
       const response = await axios.get(BASE_URL, {
         params: { key: API_KEY, search: query }
       });
+      this.cache.searchResults[query] = response.data;
+      this.saveCache();
       return response.data;
     } catch (error) {
       console.error(`Error searching games with query "${query}":`, error);
