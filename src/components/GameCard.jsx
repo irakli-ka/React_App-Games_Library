@@ -30,7 +30,8 @@ const GameCard = ({ game }) => {
       <Card sx={{ backgroundColor: theme.palette.background.paper }}>
         <CardMedia
           component="img"
-          image={game.background_image}
+          loading="lazy"
+          image={game.background_image || "/placeholder.jpg"}
           alt={game.name}
         />
         <CardContent>
