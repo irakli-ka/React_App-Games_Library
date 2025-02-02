@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,8 +9,15 @@ import Typography from '@mui/material/Typography';
 import { DarkModeContext } from '../context/DarkModeContext';
 import { Link } from 'react-router';
 
-const GameCard = ({ game }) => {
+const GameCard = ({ game, onRemove, animateOnRemove }) => {
   const { darkMode } = useContext(DarkModeContext);
+  const [inList, setInList] = useState(false);
+
+  useEffect(() => {
+    const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
+    const isInList = existingList.some((item) => item.id === game.id);
+    setInList(isInList);
+  }, [game.id]);
 
   const theme = createTheme({
     palette: {
@@ -24,6 +31,22 @@ const GameCard = ({ game }) => {
       },
     },
   });
+
+  const toggleList = () => {
+    const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
+    const isInList = existingList.some((item) => item.id === game.id);
+
+    let updatedList;
+    if (isInList) {
+      updatedList = existingList.filter((item) => item.id !== game.id);
+      if (onRemove) onRemove(game.id);
+    } else {
+      updatedList = [...existingList, game];
+    }
+
+    localStorage.setItem('gameList', JSON.stringify(updatedList));
+    setInList(!isInList);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,8 +70,13 @@ const GameCard = ({ game }) => {
         </CardContent>
         <CardActions>
           <Button size="small" component={Link} to={`/game/${game.id}`}>
-              Details
-          </Button>        
+            Details
+          </Button>
+        </CardActions>
+        <CardActions>
+          <Button size="small" onClick={toggleList}>
+            {inList ? 'Remove from list' : 'Add to list'}
+          </Button>
         </CardActions>
       </Card>
     </ThemeProvider>

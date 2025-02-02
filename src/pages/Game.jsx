@@ -29,7 +29,7 @@ const Game = () => {
         const response = await GameService.getGameDetails(id);
         setGame(response);
       } catch (error) {
-        setError('Failed to fetch game details');
+        setError('Failed to fetch game details! refresh the page');
         console.error('Failed to fetch game details:', error);
       } finally {
         setLoading(false);
