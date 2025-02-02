@@ -7,7 +7,7 @@ import searchIconLight from "../assets/search-light.svg";
 import searchIconDark from "../assets/search-dark.svg";
 import { motion } from 'framer-motion';
 
-const SearchBar = ({ search, setSearch }) => {
+const SearchBar = ({ search, setSearch, onSearch}) => {
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -16,6 +16,12 @@ const SearchBar = ({ search, setSearch }) => {
     setIsSpinning(true);
     toggleDarkMode();
     setTimeout(() => setIsSpinning(false), 500); 
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      onSearch();
+    }
   };
 
   useEffect(() => {
@@ -41,6 +47,7 @@ const SearchBar = ({ search, setSearch }) => {
           placeholder="Search Games"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleKeyPress}
           className={darkMode ? styles['dark-input'] : styles['light-input']}
         />
         <img src={darkMode ? searchIconDark : searchIconLight} alt="Search" className={styles['search-icon']} />

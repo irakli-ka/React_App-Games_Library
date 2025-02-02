@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import GameService from "../services/GameService";
 import GameCard from "../components/GameCard";
 import styles from "../styles/Home.module.css";
-import SearchBar from "../components/searchbar";
+import SearchBar from "../components/SearchBar";
 
 const Home = () => {
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState(search);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const gameIds = new Set(games.map(game => game.id));
 
@@ -34,10 +33,10 @@ const Home = () => {
       }
     };
 
-    if (!debouncedSearch) {
+    if (!search) {
       loadGames();
     }
-  }, [page, debouncedSearch]);
+  }, [page, search]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,36 +50,21 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading]);
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500); 
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [search]);
-
-  useEffect(() => {
-    const searchForGames = async () => {
-      setLoading(true);
-      try {
-        const response = await GameService.searchGames(debouncedSearch);
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const response = await GameService.searchGames(search);
+      if (response && response.results) {
         setGames(response.results);
-      } catch (error) {
-        console.error("Failed to search games:", error);
-      } finally {
-        setLoading(false);
+      } else {
+        console.error("Failed to search games: Invalid response format");
       }
-    };
-
-    if (debouncedSearch) {
-      searchForGames();
-    } else {
-      setGames([]);
-      setPage(1);
+    } catch (error) {
+      console.error("Failed to search games:", error);
+    } finally {
+      setLoading(false);
     }
-  }, [debouncedSearch]);
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -89,7 +73,7 @@ const Home = () => {
   return (
     <div className={styles.home}>
       <div className={styles.container}>
-        <SearchBar search={search} setSearch={setSearch} />
+        <SearchBar search={search} setSearch={setSearch} onSearch={handleSearch} />
         {games.map((game) => (
           <div key={`${game.id}`} className={styles["game-card"]}>
             <GameCard game={game} />
