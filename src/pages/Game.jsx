@@ -28,7 +28,6 @@ const Game = () => {
       try {
         const response = await GameService.getGameDetails(id);
         setGame(response);
-        console.log('Game details:', response);
       } catch (error) {
         setError('Failed to fetch game details');
         console.error('Failed to fetch game details:', error);
