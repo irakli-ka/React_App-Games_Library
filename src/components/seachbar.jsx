@@ -5,10 +5,18 @@ import sunIcon from "../assets/sun.svg";
 import moonIcon from "../assets/moon.svg";
 import searchIconLight from "../assets/search-light.svg";
 import searchIconDark from "../assets/search-dark.svg";
+import { motion } from 'framer-motion';
 
 const SearchBar = ({ search, setSearch }) => {
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  const handleThemeSwitch = () => {
+    setIsSpinning(true);
+    toggleDarkMode();
+    setTimeout(() => setIsSpinning(false), 500); 
+  };
 
   useEffect(() => {
     if (showEasterEgg) {
@@ -37,9 +45,17 @@ const SearchBar = ({ search, setSearch }) => {
         />
         <img src={darkMode ? searchIconDark : searchIconLight} alt="Search" className={styles['search-icon']} />
       </div>
-      <button className={styles['theme-switch']} onClick={toggleDarkMode}>
-        <img src={darkMode ? sunIcon : moonIcon} alt="Toggle Dark Mode" />
-      </button>
+      <motion.button
+        className={styles['theme-switch']}
+        onClick={handleThemeSwitch}
+      >
+        <motion.img
+          src={darkMode ? sunIcon : moonIcon}
+          alt="Toggle Dark Mode"
+          animate={isSpinning ? { rotate: [0, 360] } : { rotate: 360 }}
+          transition={{ duration: 0.5 }}
+        />
+      </motion.button>
       <img
         src={darkMode ? "https://media.tenor.com/giNrzT0tQGsAAAAj/bonfire-dark-souls.gif" : "https://media.tenor.com/QTbcrC893SIAAAAi/solaire.gif"}
         alt="Bonfire"
