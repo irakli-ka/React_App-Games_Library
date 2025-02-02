@@ -18,11 +18,15 @@ const Home = () => {
       setLoading(true);
       try {
         const response = await GameService.getGames({ page, page_size: 15 });
-        const newGames = response.results.filter(
-          (newGame) => !gameIds.has(newGame.id)
-        );
-        setGames((prevGames) => [...prevGames, ...newGames]);
-        newGames.forEach(game => gameIds.add(game.id));
+        if (response && response.results) {
+          const newGames = response.results.filter(
+            (newGame) => !gameIds.has(newGame.id)
+          );
+          setGames((prevGames) => [...prevGames, ...newGames]);
+          newGames.forEach(game => gameIds.add(game.id));
+        } else {
+          console.error("Failed to load games: Invalid response format");
+        }
       } catch (error) {
         console.error("Failed to load games:", error);
       } finally {
@@ -62,7 +66,11 @@ const Home = () => {
       setLoading(true);
       try {
         const response = await GameService.searchGames(debouncedSearch);
-        setGames(response.results);
+        if (response && response.results) {
+          setGames(response.results);
+        } else {
+          console.error("Failed to search games: Invalid response format");
+        }
       } catch (error) {
         console.error("Failed to search games:", error);
       } finally {
