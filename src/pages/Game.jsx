@@ -15,13 +15,13 @@ import { Button } from '@mui/material';
 import styles from '../styles/Game.module.css';
 
 const Game = () => {
-  const { id } = useParams(); // Get the game ID from the URL
-  const { darkMode } = useContext(DarkModeContext); // Get dark mode state from context
+  const { id } = useParams(); 
+  const { darkMode } = useContext(DarkModeContext); 
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [descriptionOpen, setDescriptionOpen] = useState(false); // State to manage description visibility
-  const [tagsOpen, setTagsOpen] = useState(false); // State to manage tags visibility
+  const [descriptionOpen, setDescriptionOpen] = useState(false); 
+  const [tagsOpen, setTagsOpen] = useState(false); 
 
   useEffect(() => {
     const fetchGame = async () => {
