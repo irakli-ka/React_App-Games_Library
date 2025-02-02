@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import GameService from "../services/GameService";
 import GameCard from "../components/GameCard";
-import { motion } from "framer-motion";
 import styles from "../styles/Home.module.css";
 import SearchBar from "../components/seachbar";
 
@@ -88,9 +87,9 @@ const Home = () => {
       <div className={styles.container}>
         <SearchBar search={search} setSearch={setSearch} />
         {games.map((game) => (
-          <motion.div key={`${game.id}`} className={styles["game-card"]}>
+          <div key={`${game.id}`} className={styles["game-card"]}>
             <GameCard game={game} />
-          </motion.div>
+          </div>
         ))}
         {loading && <p>Loading...</p>}
         {showScrollButton && (
