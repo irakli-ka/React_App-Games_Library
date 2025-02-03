@@ -1,7 +1,7 @@
 ### Games Library React App
 
 
-![Home and list showcase](https://i.imgur.com/8nGAdnI.gif)
+[![Home and list showcase](https://img.youtube.com/vi/xwyKOiOuv-0/0.jpg)](https://www.youtube.com/watch?v=xwyKOiOuv-0)
 
 ![search](https://i.imgur.com/VtnfNow.gif)
 
