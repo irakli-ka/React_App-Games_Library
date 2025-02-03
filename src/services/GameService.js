@@ -62,9 +62,15 @@ class GameService {
       const response = await axios.get(BASE_URL, {
         params: { key: API_KEY, search: query }
       });
-      this.cache.searchResults[query] = response.data;
-      this.saveCache();
-      return response.data;
+
+      if (response.data && response.data.results) {
+        this.cache.searchResults[query] = response.data;
+        this.saveCache();
+        return response.data;
+      } else {
+        console.error(`No results found for query "${query}"`);
+        return { results: [] };
+      }
     } catch (error) {
       console.error(`Error searching games with query "${query}":`, error);
       throw error;

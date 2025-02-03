@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import GameService from "../services/GameService";
 import GameCard from "../components/GameCard";
 import styles from "../styles/Home.module.css";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/searchbar";
 
 const Home = () => {
   const [games, setGames] = useState([]);
