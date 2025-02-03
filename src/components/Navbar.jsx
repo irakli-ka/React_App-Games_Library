@@ -1,7 +1,7 @@
 import styles from '../styles/Navbar.module.css';
 import { Link } from 'react-router';
 
-const Navbar = () => {
+function Navbar() {
   return (
     <nav className={styles.navbar}>
       <Link to="/" className={styles.navLink}>Home</Link>

@@ -14,7 +14,7 @@ import Collapse from '@mui/material/Collapse';
 import { Button } from '@mui/material';
 import styles from '../styles/Game.module.css';
 
-const Game = () => {
+function Game() {
   const { id } = useParams(); 
   const { darkMode } = useContext(DarkModeContext); 
   const [game, setGame] = useState(null);

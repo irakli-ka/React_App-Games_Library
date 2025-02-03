@@ -4,7 +4,7 @@ import GameCard from "../components/GameCard";
 import styles from "../styles/Home.module.css";
 import SearchBar from "../components/searchbar";
 
-const Home = () => {
+function Home() {
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);

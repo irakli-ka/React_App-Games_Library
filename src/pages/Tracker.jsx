@@ -7,7 +7,7 @@ import GameCard from '../components/GameCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from '../styles/Home.module.css';
 
-const Tracker = () => {
+function Tracker() {
   const { darkMode } = useContext(DarkModeContext);
   const [gameList, setGameList] = useState([]);
 

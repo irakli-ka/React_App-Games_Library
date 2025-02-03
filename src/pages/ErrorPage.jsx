@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/ErrorPage.module.css';
 
-const ErrorPage = () => {
+function ErrorPage() {
   return (
     <div className={styles.errorPage}>
       <h1>404 - Page Not Found</h1>

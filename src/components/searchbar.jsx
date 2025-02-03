@@ -7,7 +7,7 @@ import searchIconLight from "../assets/search-light.svg";
 import searchIconDark from "../assets/search-dark.svg";
 import { motion } from 'framer-motion';
 
-const SearchBar = ({ search, setSearch, onSearch}) => {
+function SearchBar({ search, setSearch, onSearch}) {
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);

@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { DarkModeContext } from '../context/DarkModeContext';
 import { Link } from 'react-router';
 
-const GameCard = ({ game, onRemove, animateOnRemove }) => {
+function GameCard({ game, onRemove, animateOnRemove }) {
   const { darkMode } = useContext(DarkModeContext);
   const [inList, setInList] = useState(false);
 

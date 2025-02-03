@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const DarkModeContext = createContext();
 
-export const DarkModeProvider = ({ children }) => {
+export function DarkModeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);

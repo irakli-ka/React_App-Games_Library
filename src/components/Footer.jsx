@@ -1,6 +1,6 @@
 import styles from '../styles/Footer.module.css';
 
-const Footer = () => {
+function Footer() {
   return <footer className={styles.footer}>&copy; {new Date().getFullYear()} Made For Front-End React Final Project</footer>;
 };
 
