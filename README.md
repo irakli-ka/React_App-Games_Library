@@ -57,6 +57,7 @@ External tools used:
 
 
 ## Demos
+All the demo videos were recorded on netlify hosted website.
 
 https://github.com/user-attachments/assets/2f7410dd-7a98-4d1c-be18-06cc5b7e36c1
 
