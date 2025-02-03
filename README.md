@@ -16,6 +16,9 @@ The games load automatically as you scroll.
   
 Video Demos can be viewed at the bottom of this README file.
 
+
+P.S  The api server was having issues for a day(2.2.2025) once, giving server related errors mostly.   The issue seems to have been fixed(3.2.2025).   Hopefully it will work fine. If not everything is shown in demos.
+
 ## Installation
 
 For local use:
