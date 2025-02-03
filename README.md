@@ -1,17 +1,18 @@
 ### Games Library React App
 
 
-[![Home and list showcase](https://img.youtube.com/vi/xwyKOiOuv-0/0.jpg)](https://www.youtube.com/watch?v=xwyKOiOuv-0)
+https://github.com/user-attachments/assets/2f7410dd-7a98-4d1c-be18-06cc5b7e36c1
 
-![search](https://i.imgur.com/VtnfNow.gif)
+https://github.com/user-attachments/assets/a8547ebb-de51-45c5-ae25-6d9b4be132ec
 
-![refresh showcase](https://i.imgur.com/fTeW240.gif)
+https://github.com/user-attachments/assets/b4aaee03-1c08-493a-8920-c3b78663c727
 
-![details showcase](https://i.imgur.com/L8VqVXu.gif)
+https://github.com/user-attachments/assets/c8249a51-9531-42be-967b-809ce33df239
 
-![responsive showcase](https://i.imgur.com/QCQIglu.gif)
+https://github.com/user-attachments/assets/c867c340-8384-4b0b-9703-6c42c7465a61
 
-![details responsive showcase](https://i.imgur.com/QCQIglu.gif)
+https://github.com/user-attachments/assets/361b7dc6-f8a1-49f9-abc8-a652af765d8a
+
 
 
 
