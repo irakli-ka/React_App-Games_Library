@@ -8,7 +8,7 @@
 
 ## Description
 Video game library using ![RAWG](https://rawg.io/apidocs) api. Hosted on ![Netlify](https://react-final-gameslibrary.netlify.app/#/).  
-Most info gets cached so it takes barely any time to load when refreshing switching pages.  
+Most info gets cached so it takes barely any time to load when refreshing or switching pages.  
 The list is saved in localstorage as well as Dark/Light mode preference.   
 
 ## Installation
