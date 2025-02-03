@@ -7,7 +7,7 @@
 - [Demos](#Demos)
 
 ## Description
-Video game library using [RAWG](https://rawg.io/apidocs) api. Hosted on [Netlify](https://react-final-gameslibrary.netlify.app/#/).  
+Video game library in React with Vite using [RAWG](https://rawg.io/apidocs) api.   Hosted on [Netlify](https://react-final-gameslibrary.netlify.app/#/).  
 Most info gets cached so it takes barely any time to load when refreshing or switching pages.  
 The list is saved in localstorage as well as Dark/Light mode preference.   
 Search happens on `Enter` key press while inside searchbar.  
@@ -20,6 +20,8 @@ Video Demos can be viewed at the bottom of this README file.
 
 For local use:
 
+First go to [RAWG](https://rawg.io/apidocs) register and get api key.  
+
 clone the repo
 ```
 git clone https://github.com/irakli-ka/react-final.git
@@ -29,8 +31,15 @@ cd react-final
 install dependencies
 ```
 npm install
+
 ```
 
+dont run yet.   
+create .env file and put your api key there like this.  
+```
+VITE_RAWG_API_KEY='YOUR_KEY_GOES_HERE'
+```  
+  
 run development server on localhost
 ```
 npm run dev
