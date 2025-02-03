@@ -1,25 +1,42 @@
-### Games Library React App
+# Games Library React App
 
 ## Table of Contents
-- [Project Title](#project-title)
 - [Description](#description)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Tools](#Tools)
 - [Demos](#Demos)
 
-
-
-## Project Title
-Your project title description here.
-
 ## Description
-Detailed information about your project.
+Video game library using ![RAWG](https://rawg.io/apidocs) api. Hosted on ![Netlify](https://react-final-gameslibrary.netlify.app/#/).
+Most info gets cached so it takes barely any time to load when refreshing switching pages.
+The list is saved in localstorage as well as Dark/Light mode preference. 
 
 ## Installation
-Steps to install your project.
 
-## Usage
-Instructions on how to use your project.
+For local use:
+
+clone the repo
+```
+git clone https://github.com/irakli-ka/react-final.git
+cd react-final
+```
+
+install dependencies
+```
+npm install
+```
+
+run development server on localhost
+```
+npm run dev
+```
+
+## Tools
+
+External tools used:
+  - react-router
+  * mui/material
+  + framer-motion
 
 
 ## Demos
