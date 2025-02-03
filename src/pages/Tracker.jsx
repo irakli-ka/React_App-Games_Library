@@ -54,7 +54,7 @@ function Tracker() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <GameCard game={game} onRemove={handleRemove} animateOnRemove />
+                  <GameCard game={game} onRemove={handleRemove} />
                 </motion.div>
               ))}
             </AnimatePresence>
