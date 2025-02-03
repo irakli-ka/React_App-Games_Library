@@ -1,5 +1,28 @@
 ### Games Library React App
 
+## Table of Contents
+- [Project Title](#project-title)
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Demos](#Demos)
+
+
+
+## Project Title
+Your project title description here.
+
+## Description
+Detailed information about your project.
+
+## Installation
+Steps to install your project.
+
+## Usage
+Instructions on how to use your project.
+
+
+##Demos
 
 https://github.com/user-attachments/assets/2f7410dd-7a98-4d1c-be18-06cc5b7e36c1
 
