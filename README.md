@@ -20,6 +20,8 @@ Video Demos can be viewed at the bottom of this README file.
 
 For local use:
 
+First go to [RAWG](https://rawg.io/apidocs) register and get api key.  
+
 clone the repo
 ```
 git clone https://github.com/irakli-ka/react-final.git
@@ -29,8 +31,15 @@ cd react-final
 install dependencies
 ```
 npm install
+
 ```
 
+dont run yet.   
+create .env file and put your api key there like this.  
+```
+VITE_RAWG_API_KEY='YOUR_KEY_GOES_HERE'
+```  
+  
 run development server on localhost
 ```
 npm run dev
