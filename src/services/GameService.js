@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
-const BASE_URL = "https://cors-anywhere.herokuapp.com/https://api.rawg.io/api/games";
+const BASE_URL = "https://api.rawg.io/api/games";
 
 class GameService {
   static cache = {
@@ -60,7 +60,7 @@ class GameService {
 
     try {
       const response = await axios.get(BASE_URL, {
-        params: { key: API_KEY, search: query }
+        params: { key: API_KEY, search: query, page_size: 100 },
       });
       this.cache.searchResults[query] = response.data;
       this.saveCache();
