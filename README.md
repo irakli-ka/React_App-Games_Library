@@ -16,6 +16,8 @@ The games load automatically as you scroll.
   
 Video Demos can be viewed at the bottom of this README file.
 
+`P.s. api-ს სერვერს პრობლემები ჰქონდა 2.2.2025 დან 3.2.2025, რომელიც წესით გამოასწორეს და იმედია ნორმალურად იმუშავებს როცა ამოწმებთ. თუ არა და ყველაფერი დემოებშია ნაჩვენები`
+
 ## Installation
 
 For local use:
@@ -54,6 +56,7 @@ External tools used:
 
 
 ## Demos
+All the demo videos were recorded on netlify hosted website.
 
 https://github.com/user-attachments/assets/2f7410dd-7a98-4d1c-be18-06cc5b7e36c1
 
