@@ -7,13 +7,15 @@ class GameService {
   static cache = {
     games: JSON.parse(sessionStorage.getItem('gamesCache')) || {},
     gameDetails: JSON.parse(sessionStorage.getItem('gameDetailsCache')) || {},
-    searchResults: JSON.parse(sessionStorage.getItem('searchResultsCache')) || {}
+    searchResults: JSON.parse(sessionStorage.getItem('searchResultsCache')) || {},
+    gameScreenshots: JSON.parse(sessionStorage.getItem('gameScreenshotsCache')) || {}
   };
 
   static saveCache() {
     sessionStorage.setItem('gamesCache', JSON.stringify(this.cache.games));
     sessionStorage.setItem('gameDetailsCache', JSON.stringify(this.cache.gameDetails));
     sessionStorage.setItem('searchResultsCache', JSON.stringify(this.cache.searchResults));
+    sessionStorage.setItem('gameScreenshotsCache', JSON.stringify(this.cache.gameScreenshots));
   }
 
   static async getGames(params) {
@@ -49,6 +51,25 @@ class GameService {
       return response.data;
     } catch (error) {
       console.error(`Error fetching details for game ID ${gameId}:`, error);
+      throw error;
+    }
+  }
+
+  static async getGameScreenshots(gameId) {
+    if (this.cache.gameScreenshots[gameId]) {
+      return this.cache.gameScreenshots[gameId];
+    }
+
+    try {
+      const response = await axios.get(`${BASE_URL}/${gameId}/screenshots`, {
+        params: { key: API_KEY },
+      });
+      this.cache.gameScreenshots[gameId] = response.data.results;
+      this.saveCache();
+      console.log('Screenshots:', response.data.results);
+      return response.data.results;
+    } catch (error) {
+      console.error(`Error fetching screenshots for game ID ${gameId}:`, error);
       throw error;
     }
   }
