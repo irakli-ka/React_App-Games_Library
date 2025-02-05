@@ -1,43 +1,27 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router';
-import GameService from '../services/GameService';
 import { DarkModeContext } from '../context/DarkModeContext';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Collapse from '@mui/material/Collapse';
 import { Button } from '@mui/material';
+import useFetchGameDetails from '../hooks/useFetchGameDetails';
+import useFetchGameScreenshots from '../hooks/useFetchGameScreenshots';
 import styles from '../styles/Game.module.css';
+import GameCarousel from '../components/GameCarousel';
 
 function Game() {
   const { id } = useParams(); 
   const { darkMode } = useContext(DarkModeContext); 
-  const [game, setGame] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { game, loading: gameLoading, error: gameError } = useFetchGameDetails(id);
+  const { screenshots, loading: screenshotsLoading, error: screenshotsError } = useFetchGameScreenshots(id);
   const [descriptionOpen, setDescriptionOpen] = useState(false); 
   const [tagsOpen, setTagsOpen] = useState(false); 
-
-  useEffect(() => {
-    const fetchGame = async () => {
-      try {
-        const response = await GameService.getGameDetails(id);
-        setGame(response);
-      } catch (error) {
-        setError('Failed to fetch game details! refresh the page');
-        console.error('Failed to fetch game details:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGame();
-  }, [id]);
 
   const theme = createTheme({
     palette: {
@@ -52,7 +36,7 @@ function Game() {
     },
   });
 
-  if (loading) {
+  if (gameLoading || screenshotsLoading) {
     return (
       <Container className={styles.container}>
         <CircularProgress />
@@ -60,10 +44,10 @@ function Game() {
     );
   }
 
-  if (error) {
+  if (gameError || screenshotsError) {
     return (
       <Container className={styles.container}>
-        <Alert severity="error">{error}</Alert>
+        <Alert severity="error">{gameError || screenshotsError}</Alert>
       </Container>
     );
   }
@@ -72,20 +56,22 @@ function Game() {
     return `https://${store.store.domain}`;
   };
 
-
   return (
     <ThemeProvider theme={theme}>
       <div className={styles.body}>
         <Container className={styles.container}>
           <Card className={`${styles['game-details-card']} ${darkMode ? styles['dark-mode'] : ''}`}>
-            <div className={styles['game-image-container']}>
-              <CardMedia
-                component="img"
-                image={game.background_image}
-                alt={game.name}
-                className={styles['game-image']}
-              />
-            </div>
+          <div className={styles['game-image-container']}>
+          <div className={styles['game-image-container']}>
+          <GameCarousel 
+              images={[
+                game?.background_image,
+                ...(screenshots?.map(screenshot => screenshot.image) || [])
+              ].filter(Boolean)}
+              altText={game?.name || 'Game image'}
+            />
+          </div>
+          </div>
             <CardContent className={styles['game-info']}>
               <Typography gutterBottom variant="h5" component="div" color="text.primary">
                 {game.name}
