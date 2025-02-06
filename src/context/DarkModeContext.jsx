@@ -10,7 +10,6 @@ export function DarkModeProvider({ children }) {
   useEffect(() => {
     if (!isInitialized) {
       const savedDarkMode = localStorage.getItem("darkMode");
-      console.log("Retrieved from localStorage:", { savedDarkMode });
       if (savedDarkMode) {
         setDarkMode(JSON.parse(savedDarkMode));
       }

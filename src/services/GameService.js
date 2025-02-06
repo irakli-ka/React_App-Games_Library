@@ -66,7 +66,6 @@ class GameService {
       });
       this.cache.gameScreenshots[gameId] = response.data.results;
       this.saveCache();
-      console.log('Screenshots:', response.data.results);
       return response.data.results;
     } catch (error) {
       console.error(`Error fetching screenshots for game ID ${gameId}:`, error);
