@@ -65,6 +65,9 @@ function GameCard({ game, onRemove }) {
             Released: {game.released}
           </Typography>
           <Typography variant="body2" color="text.secondary">
+                Genres: {game.genres?.map(genre => genre.name).join(', ')}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             Rating: {game.rating}⭐
           </Typography>
         </CardContent>
