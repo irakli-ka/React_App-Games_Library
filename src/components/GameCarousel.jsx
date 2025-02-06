@@ -9,6 +9,7 @@ const GameCarousel = ({ images, altText }) => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
   const containerRef = useRef(null);
 
   const minSwipeDistance = 50;
@@ -22,15 +23,19 @@ const GameCarousel = ({ images, altText }) => {
     setCurrentIndex((prevIndex) => 
       prevIndex === validImages.length - 1 ? 0 : prevIndex + 1
     );
+    setDragOffset(0);
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? validImages.length - 1 : prevIndex - 1
     );
+    setDragOffset(0);
   };
 
   const onTouchStart = (e) => {
+    if (e.target.closest('button, .nav-button')) return;
+    
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
     setIsDragging(true);
@@ -38,7 +43,9 @@ const GameCarousel = ({ images, altText }) => {
 
   const onTouchMove = (e) => {
     if (!isDragging) return;
-    setTouchEnd(e.targetTouches[0].clientX);
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+    setDragOffset(touchStart - currentTouch);
   };
 
   const onTouchEnd = () => {
@@ -57,9 +64,13 @@ const GameCarousel = ({ images, altText }) => {
     setIsDragging(false);
     setTouchStart(null);
     setTouchEnd(null);
+    setDragOffset(0);
   };
 
   const onMouseDown = (e) => {
+    // Prevent drag if clicking on navigation buttons
+    if (e.target.closest('button, .nav-button')) return;
+    
     setTouchEnd(null);
     setTouchStart(e.clientX);
     setIsDragging(true);
@@ -68,6 +79,7 @@ const GameCarousel = ({ images, altText }) => {
   const onMouseMove = (e) => {
     if (!isDragging) return;
     setTouchEnd(e.clientX);
+    setDragOffset(touchStart - e.clientX);
   };
 
   const onMouseUp = () => {
@@ -88,7 +100,12 @@ const GameCarousel = ({ images, altText }) => {
   return (
     <div 
       ref={containerRef}
-      style={{ position: 'relative', width: '100%', height: '100%' }}
+      style={{ 
+        position: 'relative', 
+        width: '100%', 
+        height: '100%', 
+        overflow: 'hidden' 
+      }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -99,24 +116,53 @@ const GameCarousel = ({ images, altText }) => {
     >
       <div 
         style={{ 
-          position: 'relative', 
-          height: '100%', 
-          overflow: 'hidden', 
-          borderRadius: '4px',
+          display: 'flex',
+          transform: `translateX(calc(-${currentIndex * 100}% + ${-dragOffset}px))`,
+          transition: isDragging ? 'none' : 'transform 0.3s ease',
+          height: '100%',
           cursor: isDragging ? 'grabbing' : 'grab'
         }}
       >
-        {validImages.length > 1 && (
+        {validImages.map((image, index) => (
+          <div 
+            key={index} 
+            style={{
+              flexShrink: 0,
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            <img
+              src={image}
+              alt={`${altText} - Image ${index + 1}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                userSelect: 'none',
+                pointerEvents: 'none'
+              }}
+              draggable="false"
+            />
+          </div>
+        ))}
+      </div>
+
+      {validImages.length > 1 && (
+        <>
           <div style={{ 
             position: 'absolute', 
-            inset: 0, 
+            top: '50%', 
+            left: 0, 
+            right: 0,
             display: 'flex', 
-            alignItems: 'center', 
             justifyContent: 'space-between',
             padding: '16px',
+            transform: 'translateY(-50%)',
             zIndex: 1
           }}>
             <IconButton
+              className="nav-button"
               onClick={goToPrevious}
               sx={{
                 backgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -130,6 +176,7 @@ const GameCarousel = ({ images, altText }) => {
               <NavigateBeforeIcon />
             </IconButton>
             <IconButton
+              className="nav-button"
               onClick={goToNext}
               sx={{
                 backgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -143,50 +190,37 @@ const GameCarousel = ({ images, altText }) => {
               <NavigateNextIcon />
             </IconButton>
           </div>
-        )}
-        <img
-          src={validImages[currentIndex]}
-          alt={`${altText} - Image ${currentIndex + 1}`}
-          style={{
-            height: '100%',
-            width: '100%',
-            objectFit: 'cover',
-            userSelect: 'none',
-            pointerEvents: 'none'
-          }}
-          draggable="false"
-        />
-      </div>
-      {validImages.length > 1 && (
-        <div style={{
-          position: 'absolute',
-          bottom: '16px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          gap: '8px',
-          zIndex: 1
-        }}>
-          {validImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              style={{
-                height: '8px',
-                width: currentIndex === index ? '16px' : '8px',
-                borderRadius: '9999px',
-                backgroundColor: currentIndex === index 
-                  ? 'rgba(255, 255, 255, 1)' 
-                  : 'rgba(255, 255, 255, 0.5)',
-                border: 'none',
-                padding: 0,
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              aria-label={`Go to image ${index + 1}`}
-            />
-          ))}
-        </div>
+
+          <div style={{
+            position: 'absolute',
+            bottom: '16px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: '8px',
+            zIndex: 1
+          }}>
+            {validImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                style={{
+                  height: '8px',
+                  width: currentIndex === index ? '16px' : '8px',
+                  borderRadius: '9999px',
+                  backgroundColor: currentIndex === index 
+                    ? 'rgba(255, 255, 255, 1)' 
+                    : 'rgba(255, 255, 255, 0.5)',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
