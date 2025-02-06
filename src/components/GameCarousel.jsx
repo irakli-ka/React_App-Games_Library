@@ -141,6 +141,7 @@ const GameCarousel = ({ images, altText }) => {
               src={image}
               alt={`${altText} - Image ${index + 1}`}
               style={{
+                borderRadius: '8px',
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
