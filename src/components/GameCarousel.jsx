@@ -68,7 +68,6 @@ const GameCarousel = ({ images, altText }) => {
   };
 
   const onMouseDown = (e) => {
-    // Prevent drag if clicking on navigation buttons
     if (e.target.closest('button, .nav-button')) return;
     
     setTouchEnd(null);
@@ -104,7 +103,11 @@ const GameCarousel = ({ images, altText }) => {
         position: 'relative', 
         width: '100%', 
         height: '100%', 
-        overflow: 'hidden' 
+        overflow: 'hidden',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        touchAction: 'pan-y',
+        '-webkit-touch-callout': 'none'
       }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
@@ -120,7 +123,8 @@ const GameCarousel = ({ images, altText }) => {
           transform: `translateX(calc(-${currentIndex * 100}% + ${-dragOffset}px))`,
           transition: isDragging ? 'none' : 'transform 0.3s ease',
           height: '100%',
-          cursor: isDragging ? 'grabbing' : 'grab'
+          cursor: isDragging ? 'grabbing' : 'grab',
+          willChange: 'transform'
         }}
       >
         {validImages.map((image, index) => (
@@ -130,6 +134,7 @@ const GameCarousel = ({ images, altText }) => {
               flexShrink: 0,
               width: '100%',
               height: '100%',
+              pointerEvents: 'none'
             }}
           >
             <img
@@ -140,9 +145,10 @@ const GameCarousel = ({ images, altText }) => {
                 height: '100%',
                 objectFit: 'cover',
                 userSelect: 'none',
-                pointerEvents: 'none'
+                WebkitUserSelect: 'none',
+                pointerEvents: 'none',
+                draggable: 'false'
               }}
-              draggable="false"
             />
           </div>
         ))}
