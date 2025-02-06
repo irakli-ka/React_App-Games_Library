@@ -9,6 +9,7 @@ const GameCarousel = ({ images, altText }) => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const containerRef = useRef(null);
 
@@ -70,25 +71,43 @@ const GameCarousel = ({ images, altText }) => {
   const onMouseDown = (e) => {
     if (e.target.closest('button, .nav-button')) return;
     
+    setIsMouseDown(true);
     setTouchEnd(null);
     setTouchStart(e.clientX);
-    setIsDragging(true);
   };
 
   const onMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isMouseDown) return;
+    setIsDragging(true);
     setTouchEnd(e.clientX);
     setDragOffset(touchStart - e.clientX);
   };
 
   const onMouseUp = () => {
-    if (!isDragging) return;
-    onTouchEnd();
+    if (!isMouseDown) return;
+    
+    if (isDragging) {
+      const distance = touchStart - touchEnd;
+      const isLeftSwipe = distance > minSwipeDistance;
+      const isRightSwipe = distance < -minSwipeDistance;
+
+      if (isLeftSwipe) {
+        goToNext();
+      } else if (isRightSwipe) {
+        goToPrevious();
+      }
+    }
+
+    setIsMouseDown(false);
+    setIsDragging(false);
+    setTouchStart(null);
+    setTouchEnd(null);
+    setDragOffset(0);
   };
 
   const onMouseLeave = () => {
-    if (isDragging) {
-      onTouchEnd();
+    if (isMouseDown) {
+      onMouseUp();
     }
   };
 
@@ -141,7 +160,6 @@ const GameCarousel = ({ images, altText }) => {
               src={image}
               alt={`${altText} - Image ${index + 1}`}
               style={{
-                borderRadius: '8px',
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
