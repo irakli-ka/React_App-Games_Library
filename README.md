@@ -14,9 +14,7 @@ Search happens on `Enter` key press while inside searchbar.
 To clear search results and go back to default games displayed, clear the searchbar field and press `Enter` or refresh the page.  
 The games load automatically as you scroll.
   
-Video Demos can be viewed at the bottom of this README file.
-
-`P.s. api-ს სერვერს პრობლემები ჰქონდა 2.2.2025 დან 3.2.2025, რომელიც წესით გამოასწორეს და იმედია ნორმალურად იმუშავებს როცა ამოწმებთ. თუ არა და ყველაფერი დემოებშია ნაჩვენები`
+Video [Demos](#Demos) can be viewed at the bottom of this README file.
 
 ## Installation
 
