@@ -6,10 +6,26 @@
   background-color: #333;
   padding: 10px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   height: 40px;
   z-index: 1000;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.authLinks {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto;
 }
 
 .navLink {
@@ -17,6 +33,12 @@
   color: white;
   font-weight: bold;
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
 }
 
 .navLink:hover {

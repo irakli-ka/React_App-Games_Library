@@ -7,17 +7,46 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { DarkModeContext } from '../context/DarkModeContext';
+import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router';
+import GamesListService from '../services/GamesListService';
 
 function GameCard({ game, onRemove }) {
   const { darkMode } = useContext(DarkModeContext);
+  const { isAuthenticated, user } = useAuth();  
   const [inList, setInList] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
-    const isInList = existingList.some((item) => item.id === game.id);
-    setInList(isInList);
-  }, [game.id]);
+    if (isAuthenticated) {
+      checkIfInList();
+    } else {
+      const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
+      const isInList = existingList.some((item) => item.id === game.id);
+      setInList(isInList);
+    }
+  }, [game.id, isAuthenticated]);
+
+  
+  const checkIfInList = async () => {
+    try {
+      if (user?.username) {
+        const userGames = await GamesListService.getUserGamesList(user.username);
+        
+        const mappedGames = userGames.map(game => ({
+          id: game.rawgId || game.RawgId || game.id
+        }));
+        
+        const isInList = mappedGames.some((item) => item.id === game.id);
+        setInList(isInList);
+      }
+    } catch (error) {
+      console.error('Error checking if game is in list:', error);
+      const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
+      const isInList = existingList.some((item) => item.id === game.id);
+      setInList(isInList);
+    }
+  };
 
   const theme = createTheme({
     palette: {
@@ -32,20 +61,61 @@ function GameCard({ game, onRemove }) {
     },
   });
 
-  const toggleList = () => {
-    const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
-    const isInList = existingList.some((item) => item.id === game.id);
-
-    let updatedList;
-    if (isInList) {
-      updatedList = existingList.filter((item) => item.id !== game.id);
-      if (onRemove) onRemove(game.id);
-    } else {
-      updatedList = [...existingList, game];
+  
+  const toggleList = async () => {
+    if (!isAuthenticated) {
+      const existingList = JSON.parse(localStorage.getItem('gameList')) || [];
+      const isInList = existingList.some((item) => item.id === game.id);
+  
+      let updatedList;
+      if (isInList) {
+        updatedList = existingList.filter((item) => item.id !== game.id);
+        if (onRemove) onRemove(game.id);
+      } else {
+        updatedList = [...existingList, game];
+      }
+  
+      localStorage.setItem('gameList', JSON.stringify(updatedList));
+      setInList(!isInList);
+      return;
     }
-
-    localStorage.setItem('gameList', JSON.stringify(updatedList));
-    setInList(!isInList);
+  
+    setLoading(true);
+    try {
+      if (inList) {
+        await GamesListService.removeGameFromUserList(game.id);
+        if (onRemove) onRemove(game.id);
+      } else {
+        const gameDto = {
+          RawgId: game.id, 
+          Name: game.name || '',
+          Release: game.released || '', 
+          Rating: game.rating?.toString() || '0', 
+          BackgroundImage: game.background_image || '', 
+          Genres: game.genres?.map(g => g.name) || []
+        };
+        
+        console.log('Sending game DTO:', gameDto); 
+        await GamesListService.addGameToUserList(gameDto);
+      }
+      setInList(!inList);
+    } catch (error) {
+      console.error('Error toggling game in list:', error);
+      
+      let errorMessage = 'Failed to update your list. ';
+      if (error.errors) {
+        const validationErrors = Object.entries(error.errors).map(([field, messages]) => 
+          `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`
+        ).join('; ');
+        errorMessage += `Validation errors: ${validationErrors}`;
+      } else {
+        errorMessage += 'Please try again.';
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -77,8 +147,8 @@ function GameCard({ game, onRemove }) {
           </Button>
         </CardActions>
         <CardActions>
-          <Button size="small" onClick={toggleList}>
-            {inList ? 'Remove from list' : 'Add to list'}
+          <Button size="small" onClick={toggleList} disabled={loading}>
+            {loading ? 'Loading...' : (inList ? 'Remove from list' : 'Add to list')}
           </Button>
         </CardActions>
       </Card>
