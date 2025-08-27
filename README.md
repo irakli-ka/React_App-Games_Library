@@ -34,8 +34,8 @@ npm install
 
 ```
 
-dont run yet.   
-create .env file and put your api key there like this.  
+Don't run yet.   
+Create .env file and put your api key there like this.  
 ```
 VITE_RAWG_API_KEY='YOUR_KEY_GOES_HERE'
 ```  
