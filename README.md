@@ -1,4 +1,4 @@
-# Games Library React App
+# Games Library React App with [GamesListAPI](https://github.com/irakli-ka/ReactGamesListAPI) Integration
 
 ## Table of Contents
 - [Description](#description)
