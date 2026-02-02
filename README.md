@@ -1,6 +1,6 @@
 # Games Library React App with [GamesListAPI](https://github.com/irakli-ka/ReactGamesListAPI) Integration
 ### ⚠ This version is not hosted on the link provided below
-Additional features include user sign-up/sign-in, library storage in the databse and library user library lookup with their username. 
+Additional features include user sign-up/sign-in, library storage in the databse and user library lookup with their username. 
 
 ## Table of Contents
 - [Description](#description)
