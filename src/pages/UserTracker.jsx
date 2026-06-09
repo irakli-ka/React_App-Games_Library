@@ -40,7 +40,7 @@ function UserTracker() {
       
       setGameList(mappedGames);
     } catch (error) {
-      console.error('Error loading user game list:', error);
+      console.error('Error loading user\'s game list:', error);
       setError(`Failed to load ${username}'s game list`);
     } finally {
       setLoading(false);
@@ -89,7 +89,7 @@ function UserTracker() {
                 zIndex: 999
             }}
             >
-            {username}'s Game List
+            {username}'s List
             </Typography>
             
             {error && (
