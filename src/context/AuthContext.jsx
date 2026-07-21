@@ -17,19 +17,25 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const storedAuth = localStorage.getItem('isAuthenticated');
-    
-    if (storedUser && storedAuth === 'true') {
-      try {
-        setUser(JSON.parse(storedUser));
+    const verifySession = async () => {
+      const currentUser = await AuthService.getCurrentUser();
+
+      if (currentUser) {
+        setUser(currentUser);
         setIsAuthenticated(true);
-      } catch (error) {
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        localStorage.setItem('isAuthenticated', 'true');
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
         localStorage.removeItem('user');
         localStorage.removeItem('isAuthenticated');
       }
-    }
-    setLoading(false);
+
+      setLoading(false);
+    };
+
+    verifySession();
   }, []);
 
   const login = async (username, password) => {
@@ -37,10 +43,10 @@ export const AuthProvider = ({ children }) => {
       const userData = await AuthService.login(username, password);
       setUser(userData);
       setIsAuthenticated(true);
-      
+
       localStorage.setItem('user', JSON.stringify(userData));
       localStorage.setItem('isAuthenticated', 'true');
-      
+
       return userData;
     } catch (error) {
       throw error;
@@ -55,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setUser(null);
       setIsAuthenticated(false);
-      
+
       localStorage.removeItem('user');
       localStorage.removeItem('isAuthenticated');
     }

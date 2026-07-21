@@ -51,6 +51,17 @@ class AuthService {
       throw error.response?.data || error.message;
     }
   }
+
+  static async getCurrentUser() {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/Users/me`, {
+      withCredentials: true
+    });
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+}
 }
 
 export default AuthService;
