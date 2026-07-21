@@ -120,14 +120,15 @@ function GameCard({ game, onRemove }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ backgroundColor: theme.palette.background.paper }}>
+      <Card sx={{ backgroundColor: theme.palette.background.paper, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', boxSizing: 'border-box' }}>
         <CardMedia
           component="img"
           loading="lazy"
           image={game.background_image || "/placeholder.jpg"}
           alt={game.name}
+          sx={{ height: 180, objectFit: 'cover' }}
         />
-        <CardContent>
+        <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="div" color="text.primary">
             {game.name}
           </Typography>
