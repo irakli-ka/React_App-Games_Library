@@ -80,7 +80,7 @@ class GameService {
 
     try {
       const response = await axios.get(BASE_URL, {
-        params: { key: API_KEY, search: query, page_size: 100 },
+        params: { key: API_KEY, search: query, page_size: 100, ordering: '-rating', search_precise: true, search_exact: true },
       });
       this.cache.searchResults[query] = response.data;
       this.saveCache();
