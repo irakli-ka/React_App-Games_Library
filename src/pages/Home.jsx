@@ -12,31 +12,49 @@ function Home() {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const gameIds = new Set(games.map(game => game.id));
 
-  useEffect(() => {
-    const loadGames = async () => {
-      setLoading(true);
-      try {
-        const response = await GameService.getGames({ page, page_size: 15 });
-        if (response && response.results) {
-          const newGames = response.results.filter(
-            (newGame) => !gameIds.has(newGame.id)
-          );
+  const loadGames = async (options = { reset: false }) => {
+    const { reset } = options;
+    setLoading(true);
+    try {
+      const fetchPage = reset ? 1 : page;
+      const response = await GameService.getGames({ page: fetchPage, page_size: 15 });
+      if (response && response.results) {
+        if (reset) {
+          setGames(response.results);
+        } else {
+          const newGames = response.results.filter((newGame) => !gameIds.has(newGame.id));
           setGames((prevGames) => [...prevGames, ...newGames]);
           newGames.forEach(game => gameIds.add(game.id));
-        } else {
-          console.error("Failed to load games: Invalid response format");
         }
-      } catch (error) {
-        console.error("Failed to load games:", error);
-      } finally {
-        setLoading(false);
+      } else {
+        console.error("Failed to load games: Invalid response format");
       }
-    };
-
-    if (!search) {
-      loadGames();
+    } catch (error) {
+      console.error("Failed to load games:", error);
+    } finally {
+      setLoading(false);
     }
-  }, [page, search]);
+  };
+
+  useEffect(() => {
+    const trimmed = search.trim();
+    if (!trimmed) {
+      // if search is empty or whitespace, return to default listing
+      // when resetting, fetch the first page of default games
+      setPage(1);
+      loadGames({ reset: true });
+    } else {
+      // when searching, do not auto-load default pages
+      // keep behavior controlled by handleSearch
+    }
+  }, [search]);
+
+  useEffect(() => {
+    const trimmed = search.trim();
+    if (!trimmed && page > 1) {
+      loadGames({ reset: false });
+    }
+  }, [page]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,9 +69,17 @@ function Home() {
   }, [loading]);
 
   const handleSearch = async () => {
+    const term = search.trim();
+    if (!term) {
+      setGames([]);
+      setPage(1);
+      await loadGames({ reset: true });
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await GameService.searchGames(search);
+      const response = await GameService.searchGames(term);
       if (response && response.results) {
         setGames(response.results);
       } else {
