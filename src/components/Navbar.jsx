@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styles from '../styles/Navbar.module.css';
 import { Link } from 'react-router';
-import { useAuth } from '../context/AuthContext'; // Use useAuth hook
+import { useAuth } from '../context/AuthContext';
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -18,7 +18,15 @@ function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.navLinks}>
         <Link to="/" className={styles.navLink}>Home</Link>
-        <Link to="/list" className={styles.navLink}>My List</Link>
+                {isAuthenticated ? (
+          <>
+              <Link to={`/list/${user?.username}`} className={styles.navLink}>My List</Link>
+          </>
+        ) : (
+          <>
+              <Link to="/list" className={styles.navLink}>My List</Link>
+          </>
+        )}
       </div>
       <div className={styles.authLinks}>
         {isAuthenticated ? (
