@@ -26,6 +26,7 @@ function UserTracker() {
   const loadUserGameList = async () => {
     setLoading(true);
     setError('');
+    setGameList([]); 
     try {
       const userGames = await GamesListService.getUserGamesList(username);
 
