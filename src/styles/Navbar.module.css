@@ -44,3 +44,23 @@
 .navLink:hover {
   color: #aeaeae;
 }
+
+@media (max-width: 700px) {
+  .navbar {
+    height: auto;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navLinks,
+  .authLinks {
+    position: static;
+    transform: none;
+    margin: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
