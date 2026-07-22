@@ -6,8 +6,14 @@
     background-attachment: fixed;
     min-height: 100vh;
     min-width: 100vw;
+  
 }
 
+@media (max-width: 700px) {
+  .home {
+    padding-top: 50px; 
+  }
+}
 .container {
   margin-top: 40px;
   display: flex;
@@ -31,6 +37,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
+
 
 .game-card:hover {
   transform: scale(1.05);
