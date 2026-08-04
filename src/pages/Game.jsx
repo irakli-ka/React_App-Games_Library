@@ -62,7 +62,6 @@ function Game() {
         <Container className={styles.container}>
           <Card className={`${styles['game-details-card']} ${darkMode ? styles['dark-mode'] : ''}`}>
           <div className={styles['game-image-container']}>
-          <div className={styles['game-image-container']}>
           <GameCarousel 
               images={[
                 game?.background_image,
@@ -71,16 +70,12 @@ function Game() {
               altText={game?.name || 'Game image'}
             />
           </div>
-          </div>
             <CardContent className={styles['game-info']}>
               <Typography gutterBottom variant="h5" component="div" color="text.primary">
                 {game.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Creator: {game.developers?.map(dev => dev.name).join(', ')}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Website: <a href={game.website} target="_blank" rel="noopener noreferrer">{game.website}</a>
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Released: {game.released}
@@ -97,39 +92,15 @@ function Game() {
               <Typography variant="body2" color="text.secondary">
                 Platforms: {game.platforms?.map(platform => platform.platform.name).join(', ')}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ESRB Rating: {game.esrb_rating?.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Stores: {game.stores?.map(store => (
-                  <span key={store.id}>
-                    <a href={getStoreUrl(store)} target="_blank" rel="noopener noreferrer">{store.store.name}</a>{' '}
-                  </span>
-                ))}
-              </Typography>
-              <div>
+              {game.stores?.length > 0 && (
                 <Typography variant="body2" color="text.secondary">
-                  Tags: {game.tags?.slice(0, 3).map(tag => tag.name).join(', ')}
+                  Stores: {game.stores.map(store => (
+                    <span key={store.id}>
+                      <a href={store.url} target="_blank" rel="noopener noreferrer">{store.name}</a>{' '}
+                    </span>
+                  ))}
                 </Typography>
-                {game.tags?.length > 3 && (
-                  <>
-                    <Collapse in={tagsOpen} timeout="auto" unmountOnExit>
-                      <Typography variant="body2" color="text.secondary">
-                        {game.tags.slice(3).map(tag => (
-                          <span key={tag.id}>{tag.name}, </span>
-                        ))}
-                      </Typography>
-                    </Collapse>
-                    <Button
-                      onClick={() => setTagsOpen(!tagsOpen)}
-                      aria-expanded={tagsOpen}
-                      aria-label="expand"
-                    >
-                      {tagsOpen ? 'Show Less Tags' : 'Show More Tags'}
-                    </Button>
-                  </>
-                )}
-              </div>
+              )}
               <Button
                 onClick={() => setDescriptionOpen(!descriptionOpen)}
                 aria-expanded={descriptionOpen}

@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -118,30 +119,56 @@ function GameCard({ game, onRemove }) {
     }
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Card sx={{ backgroundColor: theme.palette.background.paper, display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <CardMedia
-          component="img"
-          loading="lazy"
-          image={game.background_image || "/placeholder.jpg"}
-          alt={game.name}
-          sx={{
-            width: '100%',
-            height: 180,
-          }}
-        />
-        <CardContent sx={{ flexGrow: 1 }}>
+return (
+  <ThemeProvider theme={theme}>
+    <Card
+      sx={{
+        position: 'relative',
+        height: 420,
+        overflow: 'hidden',
+        boxSizing: 'border-box',
+      }}
+    >
+      {/* Full-height background image */}
+      <CardMedia
+        component="img"
+        loading="lazy"
+        image={game.background_image || "/placeholder.jpg"}
+        alt={game.name}
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
+      />
+
+      {/* Frosted overlay panel, pinned to the bottom */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          backgroundColor: darkMode ? 'rgba(30,30,30,0.55)' : 'rgba(255,255,255,0.55)',
+          backdropFilter: 'blur(4px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          borderTop: '1px solid rgba(255,255,255,0.15)',
+        }}
+      >
+        <CardContent sx={{ pb: 1 }}>
           <Typography gutterBottom variant="h5" component="div" color="text.primary">
             {game.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.primary">
             Released: {game.released}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-                Genres: {game.genres?.map(genre => genre.name).join(', ')}
+          <Typography variant="body2" color="text.primary">
+            Genres: {game.genres?.map(genre => genre.name).join(', ')}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.primary">
             Rating: {game.rating}⭐
           </Typography>
         </CardContent>
@@ -155,9 +182,10 @@ function GameCard({ game, onRemove }) {
             {loading ? 'Loading...' : (inList ? 'Remove from list' : 'Add to list')}
           </Button>
         </CardActions>
-      </Card>
-    </ThemeProvider>
-  );
+      </Box>
+    </Card>
+  </ThemeProvider>
+);
 };
 
 export default GameCard;
