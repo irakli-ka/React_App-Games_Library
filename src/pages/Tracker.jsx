@@ -31,7 +31,7 @@ function Tracker() {
         const userGames = await GamesListService.getUserGamesList(user.username);
 
         const mappedGames = userGames.map(game => ({
-          id: game.rawgId || game.RawgId || game.id,
+          id: game.igdbId || game.IgdbId || game.id,
           name: game.name || game.Name,
           background_image: game.backgroundImage || game.BackgroundImage,
           released: game.release || game.Release,

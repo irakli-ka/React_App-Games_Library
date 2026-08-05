@@ -35,7 +35,7 @@ function GameCard({ game, onRemove }) {
         const userGames = await GamesListService.getUserGamesList(user.username);
         
         const mappedGames = userGames.map(game => ({
-          id: game.rawgId || game.RawgId || game.id
+          id: game.igdbId || game.IgdbId || game.id
         }));
         
         const isInList = mappedGames.some((item) => item.id === game.id);
@@ -88,7 +88,7 @@ function GameCard({ game, onRemove }) {
         if (onRemove) onRemove(game.id);
       } else {
         const gameDto = {
-          RawgId: game.id, 
+          IgdbId: game.id, 
           Name: game.name || '',
           Release: game.released || '', 
           Rating: game.rating?.toString() || '0', 
