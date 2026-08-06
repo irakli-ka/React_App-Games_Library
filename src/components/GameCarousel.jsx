@@ -126,7 +126,6 @@ const GameCarousel = ({ images, altText }) => {
         userSelect: 'none',
         WebkitUserSelect: 'none',
         touchAction: 'pan-y',
-        '-webkit-touch-callout': 'none'
       }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}

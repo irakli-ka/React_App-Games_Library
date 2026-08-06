@@ -1,4 +1,6 @@
-# Games Library React App
+# Games Library React App with [GamesListAPI](https://github.com/irakli-ka/ReactGamesListAPI) Integration
+### ⚠ This version is not hosted on the link provided below
+Additional features provided by the Web API include user sign-up/sign-in, library storage in the databse and user library lookup with their username. 
 
 ## Table of Contents
 - [Description](#description)
@@ -54,7 +56,7 @@ External tools used:
 
 
 ## Demos
-All the demo videos were recorded on netlify hosted website.
+All the demo videos were recorded on netlify hosted website with no additional backend support.
 
 https://github.com/user-attachments/assets/2f7410dd-7a98-4d1c-be18-06cc5b7e36c1
 
